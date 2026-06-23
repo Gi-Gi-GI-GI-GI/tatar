@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ты не сломана</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:  #F0E9DA;
+      --brick:  #B84C2A;
+      --wheat:  #C8A050;
+      --deep:   #1E1108;
+      --dust:   #7A6A58;
+      --paper:  #E5D9C4;
+    }
+
+    html, body {
+      background: var(--cream);
+      font-family: 'Inter', sans-serif;
+      color: var(--deep);
+      min-height: 100vh;
+    }
+
+    /* ─── LAYOUT ──────────────────────────────────── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    /* ─── TOP BAND ────────────────────────────────── */
+    .top-band {
+      height: 56px;
+      background: var(--brick);
+      overflow: hidden;
+    }
+
+    /* ─── SIDE STRIPS ─────────────────────────────── */
+    .side-l,
+    .side-r {
+      position: absolute;
+      top: 56px;
+      width: 44px;
+      bottom: 0;
+      z-index: 4;
+      pointer-events: none;
+    }
+    .side-l { left: 0; }
+    .side-r { right: 0; }
+
+    /* ─── HERO ────────────────────────────────────── */
+    .hero {
+      position: relative;
+      padding: 48px 68px 0px 68px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 3;
+      padding-bottom: 32px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 5.2vw, 54px);
+      font-weight: 700;
+      line-height: 1.08;
+      color: var(--deep);
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--brick);
+    }
+
+    .tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--dust);
+      line-height: 1.65;
+      margin-top: 22px;
+      max-width: 380px;
+    }
+
+    /* ─── HERO IMAGE ──────────────────────────────── */
+    .hero-image-wrap {
+      position: relative;
+      z-index: 3;
+      align-self: end;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-image-wrap img {
+      width: 320px;
+      display: block;
+      position: relative;
+      z-index: 2;
+      mix-blend-mode: multiply;
+      margin-bottom: -4px;
+    }
+
+    /* ─── DESCRIPTION BAND ────────────────────────── */
+    .desc-band {
+      background: var(--paper);
+      padding: 24px 68px;
+      border-top: 3px solid var(--wheat);
+      border-bottom: 3px solid var(--wheat);
+      position: relative;
+      z-index: 3;
+      margin-top: 0;
+    }
+    .desc-band p {
+      font-size: 17px;
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* ─── FORM ────────────────────────────────────── */
+    .form-section {
+      padding: 40px 68px 56px;
+      position: relative;
+      z-index: 3;
+      border-top: 0;
+    }
+    .form-section label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dust);
+      margin-bottom: 10px;
+    }
+    .email-row {
+      display: flex;
+      border: 2px solid var(--deep);
+      max-width: 480px;
+    }
+    .email-row input {
+      flex: 1;
+      background: #fff;
+      border: none;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: var(--deep);
+      outline: none;
+    }
+    .email-row input::placeholder { color: #B0A080; }
+    .email-row button {
+      background: var(--brick);
+      color: #F0E9DA;
+      border: none;
+      padding: 14px 22px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .email-row button:hover { background: #9A3B1F; }
+
+    .fine {
+      font-size: 12px;
+      color: var(--dust);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* ─── BOTTOM BAND ─────────────────────────────── */
+    .bottom-band {
+      height: 40px;
+      background: var(--deep);
+      overflow: hidden;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 620px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 36px 52px 0 52px;
+      }
+      .hero-text { padding-bottom: 0; }
+      .hero-image-wrap {
+        justify-self: center;
+        margin-top: 24px;
+      }
+      .hero-image-wrap img { width: 260px; }
+      .desc-band, .form-section { padding-left: 52px; padding-right: 52px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- TOP ORNAMENT BAND -->
+  <div class="top-band">
+    <svg width="100%" height="56" viewBox="0 0 720 56" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect width="720" height="56" fill="#B84C2A"/>
+      <g fill="#F0E9DA" opacity="0.88">
+        <polygon points="24,6 31,13 24,20 17,13"/>
+        <polygon points="56,6 63,13 56,20 49,13"/>
+        <polygon points="88,6 95,13 88,20 81,13"/>
+        <polygon points="120,6 127,13 120,20 113,13"/>
+        <polygon points="152,6 159,13 152,20 145,13"/>
+        <polygon points="184,6 191,13 184,20 177,13"/>
+        <polygon points="216,6 223,13 216,20 209,13"/>
+        <polygon points="248,6 255,13 248,20 241,13"/>
+        <polygon points="280,6 287,13 280,20 273,13"/>
+        <polygon points="312,6 319,13 312,20 305,13"/>
+        <polygon points="344,6 351,13 344,20 337,13"/>
+        <polygon points="376,6 383,13 376,20 369,13"/>
+        <polygon points="408,6 415,13 408,20 401,13"/>
+        <polygon points="440,6 447,13 440,20 433,13"/>
+        <polygon points="472,6 479,13 472,20 465,13"/>
+        <polygon points="504,6 511,13 504,20 497,13"/>
+        <polygon points="536,6 543,13 536,20 529,13"/>
+        <polygon points="568,6 575,13 568,20 561,13"/>
+        <polygon points="600,6 607,13 600,20 593,13"/>
+        <polygon points="632,6 639,13 632,20 625,13"/>
+        <polygon points="664,6 671,13 664,20 657,13"/>
+        <polygon points="696,6 703,13 696,20 689,13"/>
+      </g>
+      <g fill="#C8A050" opacity="0.78">
+        <polygon points="40,13 45,18 40,23 35,18"/>
+        <polygon points="72,13 77,18 72,23 67,18"/>
+        <polygon points="104,13 109,18 104,23 99,18"/>
+        <polygon points="136,13 141,18 136,23 131,18"/>
+        <polygon points="168,13 173,18 168,23 163,18"/>
+        <polygon points="200,13 205,18 200,23 195,18"/>
+        <polygon points="232,13 237,18 232,23 227,18"/>
+        <polygon points="264,13 269,18 264,23 259,18"/>
+        <polygon points="296,13 301,18 296,23 291,18"/>
+        <polygon points="328,13 333,18 328,23 323,18"/>
+        <polygon points="360,13 365,18 360,23 355,18"/>
+        <polygon points="392,13 397,18 392,23 387,18"/>
+        <polygon points="424,13 429,18 424,23 419,18"/>
+        <polygon points="456,13 461,18 456,23 451,18"/>
+        <polygon points="488,13 493,18 488,23 483,18"/>
+        <polygon points="520,13 525,18 520,23 515,18"/>
+        <polygon points="552,13 557,18 552,23 547,18"/>
+        <polygon points="584,13 589,18 584,23 579,18"/>
+        <polygon points="616,13 621,18 616,23 611,18"/>
+        <polygon points="648,13 653,18 648,23 643,18"/>
+        <polygon points="680,13 685,18 680,23 675,18"/>
+      </g>
+      <g fill="#F0E9DA" opacity="0.38">
+        <polygon points="24,28 31,35 24,42 17,35"/>
+        <polygon points="56,28 63,35 56,42 49,35"/>
+        <polygon points="88,28 95,35 88,42 81,35"/>
+        <polygon points="120,28 127,35 120,42 113,35"/>
+        <polygon points="152,28 159,35 152,42 145,35"/>
+        <polygon points="184,28 191,35 184,42 177,35"/>
+        <polygon points="216,28 223,35 216,42 209,35"/>
+        <polygon points="248,28 255,35 248,42 241,35"/>
+        <polygon points="280,28 287,35 280,42 273,35"/>
+        <polygon points="312,28 319,35 312,42 305,35"/>
+        <polygon points="344,28 351,35 344,42 337,35"/>
+        <polygon points="376,28 383,35 376,42 369,35"/>
+        <polygon points="408,28 415,35 408,42 401,35"/>
+        <polygon points="440,28 447,35 440,42 433,35"/>
+        <polygon points="472,28 479,35 472,42 465,35"/>
+        <polygon points="504,28 511,35 504,42 497,35"/>
+        <polygon points="536,28 543,35 536,42 529,35"/>
+        <polygon points="568,28 575,35 568,42 561,35"/>
+        <polygon points="600,28 607,35 600,42 593,35"/>
+        <polygon points="632,28 639,35 632,42 625,35"/>
+        <polygon points="664,28 671,35 664,42 657,35"/>
+        <polygon points="696,28 703,35 696,42 689,35"/>
+      </g>
+      <line x1="0" y1="44" x2="720" y2="44" stroke="#C8A050" stroke-width="1" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <!-- LEFT SIDE STRIP -->
+  <svg class="side-l" viewBox="0 0 44 600" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="44" height="600" fill="#B84C2A" opacity="0.05"/>
+    <g fill="#B84C2A" opacity="0.6">
+      <polygon points="22,10 29,17 22,24 15,17"/>
+      <polygon points="22,42 29,49 22,56 15,49"/>
+      <polygon points="22,74 29,81 22,88 15,81"/>
+      <polygon points="22,106 29,113 22,120 15,113"/>
+      <polygon points="22,138 29,145 22,152 15,145"/>
+      <polygon points="22,170 29,177 22,184 15,177"/>
+      <polygon points="22,202 29,209 22,216 15,209"/>
+      <polygon points="22,234 29,241 22,248 15,241"/>
+      <polygon points="22,266 29,273 22,280 15,273"/>
+      <polygon points="22,298 29,305 22,312 15,305"/>
+      <polygon points="22,330 29,337 22,344 15,337"/>
+      <polygon points="22,362 29,369 22,376 15,369"/>
+      <polygon points="22,394 29,401 22,408 15,401"/>
+      <polygon points="22,426 29,433 22,440 15,433"/>
+      <polygon points="22,458 29,465 22,472 15,465"/>
+      <polygon points="22,490 29,497 22,504 15,497"/>
+      <polygon points="22,522 29,529 22,536 15,529"/>
+      <polygon points="22,554 29,561 22,568 15,561"/>
+    </g>
+    <g fill="#C8A050" opacity="0.42">
+      <polygon points="22,26 26,30 22,34 18,30"/>
+      <polygon points="22,58 26,62 22,66 18,62"/>
+      <polygon points="22,90 26,94 22,98 18,94"/>
+      <polygon points="22,122 26,126 22,130 18,126"/>
+      <polygon points="22,154 26,158 22,162 18,158"/>
+      <polygon points="22,186 26,190 22,194 18,190"/>
+      <polygon points="22,218 26,222 22,226 18,222"/>
+      <polygon points="22,250 26,254 22,258 18,254"/>
+      <polygon points="22,282 26,286 22,290 18,286"/>
+      <polygon points="22,314 26,318 22,322 18,318"/>
+      <polygon points="22,346 26,350 22,354 18,350"/>
+    </g>
+    <line x1="38" y1="0" x2="38" y2="600" stroke="#B84C2A" stroke-width="1.5" opacity="0.16"/>
+    <line x1="5"  y1="0" x2="5"  y2="600" stroke="#C8A050" stroke-width="0.5" opacity="0.22"/>
+  </svg>
+
+  <!-- RIGHT SIDE STRIP -->
+  <svg class="side-r" viewBox="0 0 44 600" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="44" height="600" fill="#B84C2A" opacity="0.05"/>
+    <g fill="#B84C2A" opacity="0.6">
+      <polygon points="22,10 29,17 22,24 15,17"/>
+      <polygon points="22,42 29,49 22,56 15,49"/>
+      <polygon points="22,74 29,81 22,88 15,81"/>
+      <polygon points="22,106 29,113 22,120 15,113"/>
+      <polygon points="22,138 29,145 22,152 15,145"/>
+      <polygon points="22,170 29,177 22,184 15,177"/>
+      <polygon points="22,202 29,209 22,216 15,209"/>
+      <polygon points="22,234 29,241 22,248 15,241"/>
+      <polygon points="22,266 29,273 22,280 15,273"/>
+      <polygon points="22,298 29,305 22,312 15,305"/>
+      <polygon points="22,330 29,337 22,344 15,337"/>
+      <polygon points="22,362 29,369 22,376 15,369"/>
+      <polygon points="22,394 29,401 22,408 15,401"/>
+      <polygon points="22,426 29,433 22,440 15,433"/>
+      <polygon points="22,458 29,465 22,472 15,465"/>
+      <polygon points="22,490 29,497 22,504 15,497"/>
+      <polygon points="22,522 29,529 22,536 15,529"/>
+      <polygon points="22,554 29,561 22,568 15,561"/>
+    </g>
+    <g fill="#C8A050" opacity="0.42">
+      <polygon points="22,26 26,30 22,34 18,30"/>
+      <polygon points="22,58 26,62 22,66 18,62"/>
+      <polygon points="22,90 26,94 22,98 18,94"/>
+      <polygon points="22,122 26,126 22,130 18,126"/>
+      <polygon points="22,154 26,158 22,162 18,158"/>
+      <polygon points="22,186 26,190 22,194 18,190"/>
+      <polygon points="22,218 26,222 22,226 18,222"/>
+      <polygon points="22,250 26,254 22,258 18,254"/>
+      <polygon points="22,282 26,286 22,290 18,286"/>
+      <polygon points="22,314 26,318 22,322 18,318"/>
+      <polygon points="22,346 26,350 22,354 18,350"/>
+    </g>
+    <line x1="6"  y1="0" x2="6"  y2="600" stroke="#B84C2A" stroke-width="1.5" opacity="0.16"/>
+    <line x1="39" y1="0" x2="39" y2="600" stroke="#C8A050" stroke-width="0.5" opacity="0.22"/>
+  </svg>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>
+        Ты не сломана.<br>
+        Ты просто хочешь<br>
+        <em>не того, что тебе навязали.</em>
+      </h1>
+      <p class="tagline">
+        10 минут — и ты увидишь разницу между тем,
+        чего хочешь ты, и тем, что тебе сказали хотеть.
+      </p>
+    </div>
+
+    <div class="hero-image-wrap">
+      <img
+        src="hero.png"
+        alt="героиня"
+        onerror="this.style.display='none'"
+      />
+    </div>
+  </section>
+
+  <!-- DESCRIPTION BAND -->
+  <div class="desc-band">
+    <p>
+      Это не тест и не опросник. Это пространство, где ты можешь
+      честно ответить себе: это моё — или мне так сказали?
+    </p>
+  </div>
+
+  <!-- FORM SECTION -->
+  <div class="form-section">
+    <label for="email">Твой email</label>
+    <div class="email-row">
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="example@mail.com"
+        autocomplete="email"
+        required
+      />
+      <button type="submit">Получить гайд →</button>
+    </div>
+    <p class="fine">Никакого спама. Только то, о чём договорились.</p>
+  </div>
+
+  <!-- BOTTOM ORNAMENT BAND -->
+  <div class="bottom-band">
+    <svg width="100%" height="40" viewBox="0 0 720 40" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect width="720" height="40" fill="#1E1108"/>
+      <g fill="#C8A050" opacity="0.65">
+        <polygon points="20,6 26,12 20,18 14,12"/>
+        <polygon points="52,6 58,12 52,18 46,12"/>
+        <polygon points="84,6 90,12 84,18 78,12"/>
+        <polygon points="116,6 122,12 116,18 110,12"/>
+        <polygon points="148,6 154,12 148,18 142,12"/>
+        <polygon points="180,6 186,12 180,18 174,12"/>
+        <polygon points="212,6 218,12 212,18 206,12"/>
+        <polygon points="244,6 250,12 244,18 238,12"/>
+        <polygon points="276,6 282,12 276,18 270,12"/>
+        <polygon points="308,6 314,12 308,18 302,12"/>
+        <polygon points="340,6 346,12 340,18 334,12"/>
+        <polygon points="372,6 378,12 372,18 366,12"/>
+        <polygon points="404,6 410,12 404,18 398,12"/>
+        <polygon points="436,6 442,12 436,18 430,12"/>
+        <polygon points="468,6 474,12 468,18 462,12"/>
+        <polygon points="500,6 506,12 500,18 494,12"/>
+        <polygon points="532,6 538,12 532,18 526,12"/>
+        <polygon points="564,6 570,12 564,18 558,12"/>
+        <polygon points="596,6 602,12 596,18 590,12"/>
+        <polygon points="628,6 634,12 628,18 622,12"/>
+        <polygon points="660,6 666,12 660,18 654,12"/>
+        <polygon points="692,6 698,12 692,18 686,12"/>
+      </g>
+      <g fill="#B84C2A" opacity="0.45">
+        <polygon points="36,12 40,16 36,20 32,16"/>
+        <polygon points="68,12 72,16 68,20 64,16"/>
+        <polygon points="100,12 104,16 100,20 96,16"/>
+        <polygon points="132,12 136,16 132,20 128,16"/>
+        <polygon points="164,12 168,16 164,20 160,16"/>
+        <polygon points="196,12 200,16 196,20 192,16"/>
+        <polygon points="228,12 232,16 228,20 224,16"/>
+        <polygon points="260,12 264,16 260,20 256,16"/>
+        <polygon points="292,12 296,16 292,20 288,16"/>
+        <polygon points="324,12 328,16 324,20 320,16"/>
+        <polygon points="356,12 360,16 356,20 352,16"/>
+        <polygon points="388,12 392,16 388,20 384,16"/>
+        <polygon points="420,12 424,16 420,20 416,16"/>
+        <polygon points="452,12 456,16 452,20 448,16"/>
+        <polygon points="484,12 488,16 484,20 480,16"/>
+        <polygon points="516,12 520,16 516,20 512,16"/>
+        <polygon points="548,12 552,16 548,20 544,16"/>
+        <polygon points="580,12 584,16 580,20 576,16"/>
+        <polygon points="612,12 616,16 612,20 608,16"/>
+        <polygon points="644,12 648,16 644,20 640,16"/>
+        <polygon points="676,12 680,16 676,20 672,16"/>
+      </g>
+      <line x1="0" y1="26" x2="720" y2="26" stroke="#C8A050" stroke-width="0.5" opacity="0.38"/>
+    </svg>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
